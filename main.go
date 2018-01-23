@@ -20,6 +20,7 @@ func main() {
 
 	defer resp.Body.Close()
 
+	// asdf
 	root, err := html.Parse(resp.Body)
 
 	if err != nil {
