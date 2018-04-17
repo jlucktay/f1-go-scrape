@@ -12,7 +12,7 @@ import (
 
 func main() {
 	// request and parse the page
-	resp, err := http.Get("https://www.f1fanatic.co.uk/2017/12/16/over-100-of-the-best-pictures-from-the-2017-season/")
+	resp, err := http.Get("https://www.racefans.net/2017/12/16/over-100-of-the-best-pictures-from-the-2017-season/")
 
 	if err != nil {
 		panic(err)
