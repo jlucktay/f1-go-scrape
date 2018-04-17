@@ -30,8 +30,8 @@ func main() {
 
 	fmt.Printf("length: %d\n", resp.ContentLength)
 
-	for h := range resp.Header {
-		fmt.Printf("%s\n", h)
+	for h, j := range resp.Header {
+		fmt.Printf("'%s' = '%s'\n", h, j)
 	}
 
 	fmt.Println(resp.Header)
