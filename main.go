@@ -14,6 +14,14 @@ func main() {
 	// request and parse the page
 	resp, err := http.Get("https://www.racefans.net/2017/12/16/over-100-of-the-best-pictures-from-the-2017-season/")
 
+	// https://www.racefans.net/2018/04/15/2018-chinese-grand-prix-in-pictures/
+
+	// https://www.racefans.net/2018/04/15/2018-chinese-grand-prix-in-pictures/motor-racing-formula-one-world-championship-chinese-grand-prix-race-day-shanghai-china-529/
+	// vvv
+	// https://www.racefans.net/wp-content/uploads/2018/04/racefansdotnet-20180415-140842-1.jpg
+
+	// https://www.racefans.net/wp-content/uploads/2017/06/P-20170612-00220_HiRes-JPEG-24bit-RGB.jpg
+
 	if err != nil {
 		panic(err)
 	}
