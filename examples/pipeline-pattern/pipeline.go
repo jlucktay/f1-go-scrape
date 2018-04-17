@@ -13,12 +13,12 @@ import (
 // Set your email here to include in the User-Agent string.
 var email = "youremail@gmail.com"
 var urls = []string{
-	"http://techcrunch.com/",
-	"https://www.reddit.com/",
+	"https://buzzfeed.com",
+	"https://digg.com",
 	"https://en.wikipedia.org",
-	"https://news.ycombinator.com/",
-	"https://www.buzzfeed.com/",
-	"http://digg.com",
+	"https://news.ycombinator.com",
+	"https://reddit.com",
+	"https://techcrunch.com",
 }
 
 func respGen(urls ...string) <-chan *http.Response {
@@ -107,7 +107,7 @@ func titleGen(in <-chan *html.Node) <-chan string {
 	return out
 }
 
-func pipelineMain() {
+func main() {
 	// Set up the pipeline to consume back-to-back output
 	// ending with the final stage to print the title of
 	// each web page in the main go routine.
