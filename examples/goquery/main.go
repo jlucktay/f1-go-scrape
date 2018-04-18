@@ -11,6 +11,7 @@ import (
 
 func main() {
 	doc, err := goquery.NewDocument("https://blog.golang.org")
+	// Deprecated: Use the net/http standard library package to make the request and validate the response before calling goquery.NewDocumentFromReader with the response's body.
 
 	if err != nil {
 		log.Fatal(err)
