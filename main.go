@@ -22,6 +22,8 @@ func main() {
 
 	// https://www.racefans.net/wp-content/uploads/2017/06/P-20170612-00220_HiRes-JPEG-24bit-RGB.jpg
 
+	// https://www.racefans.net/wp-content/uploads/2017/03/XPB_865995_HiRes.jpg
+
 	if err != nil {
 		panic(err)
 	}
@@ -66,7 +68,7 @@ func nodeMatcher(n *html.Node) bool {
 		for i, a := range n.Attr {
 			fmt.Printf("[%3d] n: '%s'\n[%3d] k: '%s'\n[%3d] v: '%s'\n", i, a.Namespace, i, a.Key, i, a.Val)
 
-			if a.Key == "rel" && caseInsensitiveContains(a.Val, "attachment") {
+			if a.Key == "rel" && containsIgnoreCase(a.Val, "attachment") {
 				return true
 			}
 		}
@@ -74,7 +76,7 @@ func nodeMatcher(n *html.Node) bool {
 
 	// fmt.Println()
 
-	// if caseInsensitiveContains(scrape.Attr(n, "rel"), "attachment") {
+	// if containsIgnoreCase(scrape.Attr(n, "rel"), "attachment") {
 	// 	fmt.Println("type:", n.Type)
 	// 	// return scrape.Attr(n.Parent.Parent, "class") == "athing"
 	// }
@@ -82,9 +84,9 @@ func nodeMatcher(n *html.Node) bool {
 	return false
 }
 
-// caseInsensitiveContains checks if one string contains another, case-insensitively
-func caseInsensitiveContains(s, substr string) bool {
-	s, substr = strings.ToUpper(s), strings.ToUpper(substr)
+// containsIgnoreCase checks if haystack contains needle, case-insensitively
+func containsIgnoreCase(haystack, needle string) bool {
+	haystack, needle = strings.ToUpper(haystack), strings.ToUpper(needle)
 
-	return strings.Contains(s, substr)
+	return strings.Contains(haystack, needle)
 }
