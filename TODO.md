@@ -9,7 +9,7 @@
 
 ## Pipeline layout
 
-URL (`string`) to `*Document` to ... to image URL (`string`) to downloader
+Starting URL (`string`) to `*goquery.Document` to ... to image URL (`string`) to size-checker to downloader
 
 Get:
 
