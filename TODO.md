@@ -14,6 +14,7 @@
 1. ...?
 1. image URL (`string`)
 1. size-checker
+- May need to reverse the order here, since we need to download the image in order to be able to check the size
 1. downloader
 
 Get:
