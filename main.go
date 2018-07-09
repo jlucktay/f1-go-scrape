@@ -11,9 +11,9 @@ import (
 )
 
 func main() {
-	bestURL, _ := url.Parse("https://www.racefans.net/2017/12/16/over-100-of-the-best-pictures-from-the-2017-season/")
+	targetURL, _ := url.Parse("https://www.racefans.net/2017/12/16/over-100-of-the-best-pictures-from-the-2017-season/")
 
-	res, err := http.DefaultClient.Do(newRequest(*bestURL))
+	res, err := http.DefaultClient.Do(newRequest(*targetURL))
 	if err != nil {
 		log.Fatal(err)
 	}
