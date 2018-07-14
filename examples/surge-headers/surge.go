@@ -11,7 +11,7 @@ import (
 
 func main() {
 	// request and parse the page
-	resp, err := http.Get("http://jameslucktaylor.info")
+	resp, err := http.Get("https://jlucktay.surge.sh")
 	if resp != nil {
 		defer resp.Body.Close()
 	}
