@@ -18,10 +18,11 @@ func main() {
 	}
 	defer resp.Body.Close()
 
-	m, _, err := image.Decode(resp.Body)
+	m, f, err := image.Decode(resp.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("format:", f)
 	g := m.Bounds()
 
 	// Get height and width
@@ -32,5 +33,6 @@ func main() {
 	resolution := height * width
 
 	// Print results
+	fmt.Printf("dimensions: %+v\n", g)
 	fmt.Println(resolution, "pixels")
 }
