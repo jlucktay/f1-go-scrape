@@ -16,8 +16,7 @@ func main() {
 
 	req.Header.Set("User-Agent", "Golang_Spider_Bot/"+runtime.Version())
 
-	client := &http.Client{}
-	resp, errGet := client.Do(req)
+	resp, errGet := http.DefaultClient.Do(req)
 	if errGet != nil {
 		log.Fatal(errGet)
 	}
