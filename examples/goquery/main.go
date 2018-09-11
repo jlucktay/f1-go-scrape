@@ -5,16 +5,25 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/PuerkitoBio/goquery"
 )
 
 func main() {
-	doc, err := goquery.NewDocument("https://blog.golang.org")
-	// Deprecated: Use the net/http standard library package to make the request and validate the response before calling goquery.NewDocumentFromReader with the response's body.
+	res, getErr := http.DefaultClient.Get("https://blog.golang.org")
+	if getErr != nil {
+		log.Fatal(getErr)
+	}
+	defer res.Body.Close()
 
-	if err != nil {
-		log.Fatal(err)
+	if res.StatusCode != 200 {
+		log.Fatalf("Status code error: %d\n%s\n", res.StatusCode, res.Status)
+	}
+
+	doc, readErr := goquery.NewDocumentFromReader(res.Body)
+	if readErr != nil {
+		log.Fatal(readErr)
 	}
 
 	doc.Find(".article").Each(func(i int, s *goquery.Selection) {
