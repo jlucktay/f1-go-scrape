@@ -1,34 +1,32 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"runtime"
 )
 
 func main() {
+	req, errReq := http.NewRequest("GET", "http://httpbin.org/user-agent", nil)
+	if errReq != nil {
+		log.Fatal(errReq)
+	}
+
+	req.Header.Set("User-Agent", "Golang_Spider_Bot/"+runtime.Version())
+
 	client := &http.Client{}
-
-	req, err := http.NewRequest("GET", "http://httpbin.org/user-agent", nil)
-
-	if err != nil {
-		log.Fatalln(err)
+	resp, errGet := client.Do(req)
+	if errGet != nil {
+		log.Fatal(errGet)
 	}
-
-	req.Header.Set("User-Agent", "Golang_Spider_Bot/3.0")
-
-	resp, err := client.Do(req)
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
 
-	if err != nil {
-		log.Fatalln(err)
+	body, errRead := ioutil.ReadAll(resp.Body)
+	if errRead != nil {
+		log.Fatal(errRead)
 	}
 
-	log.Println(string(body))
+	fmt.Println(string(body))
 }
