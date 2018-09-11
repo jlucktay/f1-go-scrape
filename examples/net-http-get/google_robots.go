@@ -8,14 +8,16 @@ import (
 )
 
 func main() {
-	res, err := http.Get("http://www.google.com/robots.txt")
-	if err != nil {
-		log.Fatal(err)
+	res, errGet := http.Get("https://www.google.com/robots.txt")
+	if errGet != nil {
+		log.Fatal(errGet)
 	}
-	robots, err := ioutil.ReadAll(res.Body)
-	res.Body.Close()
-	if err != nil {
-		log.Fatal(err)
+	defer res.Body.Close()
+
+	robots, errRead := ioutil.ReadAll(res.Body)
+	if errRead != nil {
+		log.Fatal(errRead)
 	}
-	fmt.Printf("%s", robots)
+
+	fmt.Println(string(robots))
 }
