@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"sync"
 
@@ -28,17 +29,16 @@ func respGen(urls ...string) <-chan *http.Response {
 
 	for _, url := range urls {
 		go func(url string) {
-			req, err := http.NewRequest("GET", url, nil)
-
-			if err != nil {
-				panic(err)
+			req, errReq := http.NewRequest("GET", url, nil)
+			if errReq != nil {
+				log.Fatal(errReq)
 			}
 
-			req.Header.Set("user-agent", "testBot("+email+")")
-			resp, err := http.DefaultClient.Do(req)
+			req.Header.Set("User-Agent", "testBot("+email+")")
 
-			if err != nil {
-				panic(err)
+			resp, errGet := http.DefaultClient.Do(req)
+			if errGet != nil {
+				log.Fatal(errGet)
 			}
 
 			out <- resp
@@ -65,7 +65,7 @@ func rootGen(in <-chan *http.Response) <-chan *html.Node {
 			root, err := html.Parse(resp.Body)
 
 			if err != nil {
-				panic(err)
+				log.Fatal(err)
 			}
 
 			out <- root
@@ -108,9 +108,8 @@ func titleGen(in <-chan *html.Node) <-chan string {
 }
 
 func main() {
-	// Set up the pipeline to consume back-to-back output
-	// ending with the final stage to print the title of
-	// each web page in the main go routine.
+	// Set up the pipeline to consume back-to-back output ending with the final
+	// stage to print the title of each web page in the main go routine.
 	for title := range titleGen(rootGen(respGen(urls...))) {
 		fmt.Println(title)
 	}
