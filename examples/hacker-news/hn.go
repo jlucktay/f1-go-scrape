@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/yhat/scrape"
@@ -13,12 +14,12 @@ func main() {
 	// Request and parse the front page
 	resp, getErr := http.Get("https://news.ycombinator.com/")
 	if getErr != nil {
-		panic(getErr)
+		log.Fatal(getErr)
 	}
 
 	root, parseErr := html.Parse(resp.Body)
 	if parseErr != nil {
-		panic(parseErr)
+		log.Fatal(parseErr)
 	}
 
 	// Grab all articles and print them
