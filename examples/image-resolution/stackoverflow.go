@@ -12,27 +12,24 @@ import (
 )
 
 func main() {
-	resp, err := http.Get("http://i.imgur.com/Peq1U1u.jpg")
-	if err != nil {
-		log.Fatal(err)
+	resp, errGet := http.Get("http://i.imgur.com/Peq1U1u.jpg")
+	if errGet != nil {
+		log.Fatal(errGet)
 	}
 	defer resp.Body.Close()
 
-	m, f, err := image.Decode(resp.Body)
-	if err != nil {
-		log.Fatal(err)
+	m, f, errDecode := image.Decode(resp.Body)
+	if errDecode != nil {
+		log.Fatal(errDecode)
 	}
-	fmt.Println("format:", f)
+
+	fmt.Println("Format:", f)
 	g := m.Bounds()
 
-	// Get height and width
-	height := g.Dy()
-	width := g.Dx()
-
 	// The resolution is height x width
-	resolution := height * width
+	resolution := g.Dy() * g.Dx()
 
 	// Print results
-	fmt.Printf("dimensions: %+v\n", g)
+	fmt.Printf("Dimensions: %+v\n", g)
 	fmt.Println(resolution, "pixels")
 }
