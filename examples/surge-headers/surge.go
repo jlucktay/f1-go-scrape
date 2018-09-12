@@ -2,55 +2,32 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
-
-	"github.com/yhat/scrape"
-	"golang.org/x/net/html"
-	"golang.org/x/net/html/atom"
+	"sort"
 )
 
 func main() {
-	// request and parse the page
-	resp, err := http.Get("https://jlucktay.surge.sh")
-	if resp != nil {
-		defer resp.Body.Close()
+	resp, errGet := http.Get("https://jlucktay.surge.sh")
+	if errGet != nil {
+		log.Fatal(errGet)
+	}
+	defer resp.Body.Close()
+
+	headerKeys := make([]string, 0, len(resp.Header))
+	longestKey := 0
+
+	for h := range resp.Header {
+		headerKeys = append(headerKeys, h)
+
+		if len(h) > longestKey {
+			longestKey = len(h)
+		}
 	}
 
-	if err != nil {
-		fmt.Println(err)
-		panic(err)
+	sort.Strings(headerKeys)
+
+	for _, key := range headerKeys {
+		fmt.Printf("% -*s = %+v\n", longestKey, key, resp.Header[key])
 	}
-
-	root, err := html.Parse(resp.Body)
-
-	if err != nil {
-		fmt.Println(err)
-		panic(err)
-	}
-
-	fmt.Printf("length: %d\n", resp.ContentLength)
-
-	for h, j := range resp.Header {
-		fmt.Printf("'%s' = '%s'\n", h, j)
-	}
-
-	fmt.Println(resp.Header)
-
-	// grab all articles and print them
-	articles := scrape.FindAllNested(root, nodeMatcher)
-
-	fmt.Println("Articles:")
-
-	for i, article := range articles {
-		fmt.Printf("%2d %s (%s)\n", i, scrape.Text(article), scrape.Attr(article, "href"))
-	}
-}
-
-func nodeMatcher(n *html.Node) bool {
-	// must check for nil values
-	if n.DataAtom == atom.A && n.Parent != nil && n.Parent.Parent != nil {
-		return scrape.Attr(n.Parent.Parent, "class") == "athing"
-	}
-
-	return false
 }
