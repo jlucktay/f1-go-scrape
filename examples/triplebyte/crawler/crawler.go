@@ -245,7 +245,7 @@ func (c *crawl) wait() (graph *WebsiteGraph, errors []string) {
 // Crawl crawls a web site and produces a report
 func (crawler *Crawler) Crawl(target, outfile string) (*WebsiteGraph, error) {
 	// TODO outfile?
-	if !strings.HasPrefix(target, "http://") {
+	if !strings.HasPrefix(target, "http://") && !strings.HasPrefix(target, "https://") {
 		target = "http://" + target
 	}
 
